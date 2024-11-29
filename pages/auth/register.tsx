@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { supabase } from '../../lib/supabaseClient';
 
 const Register = () => {
     const [email, setEmail] = useState('');
@@ -11,17 +12,42 @@ const Register = () => {
 
     useEffect(() => {
         // Verifica se o usuário está logado e se é um técnico
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-            const parsedUser = JSON.parse(storedUser);
-            if (parsedUser.role !== 'tecnico') {
-                alert('Acesso negado: apenas técnicos podem registrar novos usuários.');
+        const checkUserRole = async () => {
+            try {
+                const { data: session } = await supabase.auth.getSession();
+
+                if (!session?.session) {
+                    alert('Por favor, faça login antes de acessar a página de registro.');
+                    router.push('/auth/login');
+                    return;
+                }
+
+                const userEmail = session.session.user.email;
+
+                // Consulta no Supabase para verificar o papel (role) do usuário
+                const { data: user, error } = await supabase
+                    .from('users')
+                    .select('role')
+                    .eq('email', userEmail)
+                    .single();
+
+                if (error || !user) {
+                    alert('Erro ao verificar papel do usuário. Por favor, tente novamente.');
+                    router.push('/auth/login');
+                    return;
+                }
+
+                if (user.role !== 'tecnico') {
+                    alert('Acesso negado: apenas técnicos podem registrar novos usuários.');
+                    router.push('/dashboard'); // Redireciona para uma página segura
+                }
+            } catch (err) {
+                alert('Ocorreu um erro. Por favor, tente novamente.');
                 router.push('/auth/login');
             }
-        } else {
-            alert('Por favor, faça login antes de acessar a página de registro.');
-            router.push('/auth/login');
-        }
+        };
+
+        checkUserRole();
     }, [router]);
 
     

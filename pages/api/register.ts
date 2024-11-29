@@ -13,13 +13,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     const { email, password, role, requesterRole } = req.body;
 
-    if (requesterRole !== 'tecnico') {
-        return res.status(403).json({ message: 'Acesso negado' });
-    }
+    // if (requesterRole !== 'tecnico') {
+    //     return res.status(403).json({ message: 'Acesso negado' });
+    // }
    
-    if (role !== 'professor' && role !== 'tecnico') {
-        return res.status(400).json({ message: 'Papel inválido' });
-    }
+    // if (role !== 'professor' && role !== 'tecnico') {
+    //     return res.status(400).json({ message: 'Papel inválido' });
+    // }
 
     const hashedPassword = hashPassword(password);
 
