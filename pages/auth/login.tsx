@@ -71,7 +71,7 @@ const Login = () => {
                     Entrar
                 </button>
             </form>
-            <button onClick={handleRegisterRedirect} style={{ marginTop: '1rem', padding: '0.5rem 1rem' }}>
+            <button onClick={handleRegisterRedirect} className="bg-gray-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full cursor-not-allowed" style={{ marginTop: '1rem' }}>
                 Registrar
             </button>
         </div>

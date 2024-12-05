@@ -66,7 +66,25 @@ const RegisterLaboratory = () => {
                 </div>
                 {message && <p style={{ color: 'green' }}>{message}</p>}
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-                <button type="submit" style={{ padding: '0.5rem 1rem' }}>Registrar Laboratório</button>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <button type="submit" 
+                            style={{
+                                width: '100%',
+                                padding: '0.75rem',
+                                backgroundColor: '#0070f3',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                                fontSize: '1rem',
+                                fontWeight: 'bold',
+                                transition: 'background-color 0.3s ease',
+                            }}
+                            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#005bb5')}
+                            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#0070f3')}>
+                            Registrar Laboratório
+                    </button>
+                </div>
             </form>
         </div>
     );
